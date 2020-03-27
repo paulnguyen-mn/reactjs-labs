@@ -1,26 +1,26 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import HomePage from './containers/HomePage';
 
 function App() {
+  const name = 'Hau Nguyen';
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <HomePage />
     </div>
   );
 }
 
 export default App;
+
+
+// HomePage
+//  - Header
+//  - Hero
+//  - ProductList
+
+// AboutPage
+//  - Header
+//  - Hero
