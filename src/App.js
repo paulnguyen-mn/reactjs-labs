@@ -6,12 +6,15 @@ import AboutPage from './containers/AboutPage';
 import HomePage from './containers/HomePage';
 import NotFound from './containers/NotFound';
 import ContactPage from './containers/ContactPage';
+import ProductListPage from './containers/ProductListPage';
+import AddEditProductPage from './containers/AddEditProductPage';
+import ProductDetailPage from './containers/ProductDetailPage';
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <h2>Nav link</h2>
+        {/* <h2>Nav link</h2>
         <ul className="nav">
           <li>
             <NavLink
@@ -50,12 +53,17 @@ function App() {
           <li><Link to="/">Home</Link></li>
           <li><Link to="/about">About</Link></li>
           <li><Link to="/contact">Contact</Link></li>
-        </ul>
+        </ul> */}
 
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/about" component={AboutPage} />
           <Route path="/contact" component={ContactPage} />
+
+          <Route exact path="/products" component={ProductListPage} />
+          <Route path="/products/add" component={AddEditProductPage} />
+          <Route path="/products/:productId/edit" component={AddEditProductPage} />
+          <Route path="/products/:productId" component={ProductDetailPage} />
 
           <Redirect from="/reactjs" to="/" />
           <Redirect from="/posts/:postId" to="/new-path/posts/:postId" />
