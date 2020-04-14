@@ -1,14 +1,67 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Switch, NavLink, Link, Redirect } from 'react-router-dom';
+
+import './App.scss';
+import AboutPage from './containers/AboutPage';
 import HomePage from './containers/HomePage';
+import NotFound from './containers/NotFound';
+import ContactPage from './containers/ContactPage';
 
 function App() {
-  const name = 'Hau Nguyen';
-
   return (
     <div className="App">
-      <HomePage />
+      <BrowserRouter>
+        <h2>Nav link</h2>
+        <ul className="nav">
+          <li>
+            <NavLink
+              exact
+              to="/"
+              className="nav__link"
+              activeClassName="nav__link--active"
+            >
+              Home
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/about"
+              className="nav__link"
+              activeClassName="nav__link--active"
+            >
+              About
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/contact"
+              className="nav__link"
+              activeClassName="nav__link--active"
+            >
+              Contact
+            </NavLink>
+          </li>
+        </ul>
+
+        <h2>Link</h2>
+        <ul>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/about">About</Link></li>
+          <li><Link to="/contact">Contact</Link></li>
+        </ul>
+
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route path="/about" component={AboutPage} />
+          <Route path="/contact" component={ContactPage} />
+
+          <Redirect from="/reactjs" to="/" />
+          <Redirect from="/posts/:postId" to="/new-path/posts/:postId" />
+          <Route component={NotFound} />
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }
