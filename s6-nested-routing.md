@@ -69,5 +69,27 @@ class ProductSearch extends PureComponent {
       _page: newPage,
     }
   }
+
+  handlePriceFilterChange = (priceRange) => {
+    const newFilter = {
+      ...this.state.filters,
+      _page: 1,
+      salePrice_gte: priceRange.min,
+      salePrice_lte: priceRange.max,
+    };
+
+    // Call API with new filters
+    // Call success --> update state: product list + new filters
+  }
+
+  render() {
+    return (
+      <PriceFilter onChange={this.handlePriceFilterChange}>
+    )
+  }
 }
 ```
+
+Link, NavLink: React Router --> internal routing in reactjs app.
+
+External links: using anchor <a href="" target="_blank" rel="noopener noreferrer">

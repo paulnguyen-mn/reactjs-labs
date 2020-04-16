@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { BrowserRouter, Route, Switch, NavLink, Link, Redirect } from 'react-router-dom';
 
 import './App.scss';
@@ -9,69 +9,72 @@ import ContactPage from './containers/ContactPage';
 import ProductListPage from './containers/ProductListPage';
 import AddEditProductPage from './containers/AddEditProductPage';
 import ProductDetailPage from './containers/ProductDetailPage';
+import GlobalContext from './contexts/globalContext';
 
-function App() {
-  return (
-    <div className="App">
-      <BrowserRouter>
-        {/* <h2>Nav link</h2>
-        <ul className="nav">
-          <li>
-            <NavLink
-              exact
-              to="/"
-              className="nav__link"
-              activeClassName="nav__link--active"
-            >
-              Home
-            </NavLink>
-          </li>
+class App extends PureComponent {
+  constructor(props) {
+    super(props);
 
-          <li>
-            <NavLink
-              to="/about"
-              className="nav__link"
-              activeClassName="nav__link--active"
-            >
-              About
-            </NavLink>
-          </li>
+    this.state = {
+      initialState: {
+        loggedInUser: {},
+        cart: {},
+        theme: 'light',
+        setTheme: (newTheme) => {
+          // Only allow theme is either light or dark
+          if (!['light', 'dark'].includes(newTheme)) return;
 
-          <li>
-            <NavLink
-              to="/contact"
-              className="nav__link"
-              activeClassName="nav__link--active"
-            >
-              Contact
-            </NavLink>
-          </li>
-        </ul>
+          this.setState(prevState => ({
+            initialState: {
+              ...prevState.initialState,
+              theme: newTheme
+            }
+          }));
+        }
+      },
+    }
+  }
 
-        <h2>Link</h2>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/about">About</Link></li>
-          <li><Link to="/contact">Contact</Link></li>
-        </ul> */}
+  handleClick = () => {
+    this.setState(prevState => ({
+      initialState: {
+        ...prevState.initialState,
+        loggedInUser: {
+          id: 1,
+          name: 'Hau Nguyen',
+        }
+      }
+    }))
+  }
 
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/about" component={AboutPage} />
-          <Route path="/contact" component={ContactPage} />
+  render() {
+    const { initialState } = this.state;
 
-          <Route exact path="/products" component={ProductListPage} />
-          <Route path="/products/add" component={AddEditProductPage} />
-          <Route path="/products/:productId/edit" component={AddEditProductPage} />
-          <Route path="/products/:productId" component={ProductDetailPage} />
+    return (
+      <div className="App">
+        <button onClick={this.handleClick}>Change context value</button>
 
-          <Redirect from="/reactjs" to="/" />
-          <Redirect from="/posts/:postId" to="/new-path/posts/:postId" />
-          <Route component={NotFound} />
-        </Switch>
-      </BrowserRouter>
-    </div>
-  );
+        <GlobalContext.Provider value={initialState}>
+          <BrowserRouter>
+            <Switch>
+              <Route exact path="/" component={HomePage} />
+              <Route path="/about" component={AboutPage} />
+              <Route path="/contact" component={ContactPage} />
+
+              <Route exact path="/products" component={ProductListPage} />
+              <Route path="/products/add" component={AddEditProductPage} />
+              <Route path="/products/:productId/edit" component={AddEditProductPage} />
+              <Route path="/products/:productId" component={ProductDetailPage} />
+
+              <Redirect from="/reactjs" to="/" />
+              <Redirect from="/posts/:postId" to="/new-path/posts/:postId" />
+              <Route component={NotFound} />
+            </Switch>
+          </BrowserRouter>
+        </GlobalContext.Provider>
+      </div>
+    );
+  }
 }
 
 export default App;

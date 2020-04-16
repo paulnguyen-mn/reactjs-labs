@@ -2,6 +2,7 @@ import React, { PureComponent, Suspense } from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route, Redirect, NavLink } from 'react-router-dom';
 import NotFound from '../NotFound';
+import GlobalContext from '../../contexts/globalContext';
 
 // import Description from '../../components/Product/Description';
 // import Information from '../../components/Product/Information';
@@ -13,13 +14,24 @@ const Information = React.lazy(() => import('../../components/Product/Informatio
 const Reviews = React.lazy(() => import('../../components/Product/Reviews'));
 
 class ProductDetailPage extends PureComponent {
+  handleChangeThemeClick = () => {
+    if (!this.context.setTheme) return;
+
+    this.context.setTheme('dark');
+  }
+
+  // Solution 1
+  // static contextType = GlobalContext;
   render() {
     const { match } = this.props;
-    console.log(match);
+    // console.log(match);
+    console.log('Product detail - context: ', this.context);
 
     return (
       <div className="product">
         <h1>Product detail page</h1>
+
+        <button onClick={this.handleChangeThemeClick}>Set theme to dark</button>
 
         <section>
           Product details
@@ -74,6 +86,9 @@ class ProductDetailPage extends PureComponent {
     );
   }
 }
+
+// Solution 2
+ProductDetailPage.contextType = GlobalContext;
 
 ProductDetailPage.propTypes = {
   match: PropTypes.object.isRequired,
