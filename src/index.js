@@ -1,14 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { Provider } from 'react-redux';
 import App from './App';
+import './index.css';
 import * as serviceWorker from './serviceWorker';
-import { createStore } from 'redux';
+import store from './store';
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root-app')
 );
@@ -22,27 +25,110 @@ serviceWorker.unregister();
 // TESTING SIMPLE REDUX
 
 // Simple reducer
-const counter = (state = 0, action) => {
-  switch (action.type) {
-    case 'INCREMENT':
-      return state + 1;
-    case 'DECREMENT':
-      return state - 1;
-    default:
-      return state;
-  }
-};
+// const counter = (state = 0, action) => {
+//   switch (action.type) {
+//     case 'INCREMENT':
+//       return state + 1;
+//     case 'DECREMENT':
+//       return state - 1;
+//     default:
+//       return state;
+//   }
+// };
 
-const store = createStore(counter);
-console.log('Redux store: ', store.getState());
+// const initialHeroState = {
+//   list: [],
+//   activeHero: {},
+// };
+// const heroReducer = (state = initialHeroState, action) => {
+//   switch (action.type) {
+//     case 'ADD_HERO': {
+//       const newList = [...state.list];
+//       newList.push(action.payload);
 
-// Log on every changes on store
-store.subscribe(() => {
-  console.log('Store update: ', store.getState());
-});
+//       // const newState = { ...state };
+//       // newState.list.push(action.payload);
+//       return {
+//         ...state,
+//         list: newList,
+//       };
+//     }
+//     case 'REMOVE_HERO': {
+//       const heroId = action.payload;
+//       const newList = [...state.list].filter(hero => hero.id !== heroId);
 
-// Dispatch action: INCREMENT
-store.dispatch({ type: 'INCREMENT' });
-store.dispatch({ type: 'INCREMENT123' });
-store.dispatch({ type: 'INCREMENT' });
-store.dispatch({ type: 'DECREMENT' });
+//       return {
+//         ...state,
+//         list: newList,
+//       };
+//     }
+//     case 'SET_ACTIVE_HERO': {
+//       const newActiveHero = {
+//         ...action.payload,
+//       };
+//       // const newActiveHero = action.payload;
+
+//       return {
+//         ...state,
+//         activeHero: newActiveHero,
+//       };
+//     }
+//     default:
+//       return state;
+//   }
+// };
+
+// const rootReducer = combineReducers({
+//   counter: counter,
+//   hero: heroReducer,
+// });
+
+// const store = createStore(rootReducer);
+// console.log('Redux store: ', store.getState());
+
+// // Log on every changes on store
+// store.subscribe(() => {
+//   console.log('Store update: ', store.getState());
+// });
+
+// // Dispatch action: INCREMENT
+// // store.dispatch({ type: 'INCREMENT' });
+// // store.dispatch({ type: 'INCREMENT123' });
+// // store.dispatch({ type: 'INCREMENT' });
+// // store.dispatch({ type: 'DECREMENT' });
+
+// store.dispatch({
+//   type: 'ADD_HERO',
+//   payload: { id: 1, name: 'Iron man', power: 999 },
+// });
+// store.dispatch({
+//   type: 'ADD_HERO',
+//   payload: { id: 2, name: 'Spider man', power: 9999 }
+// });
+// store.dispatch({
+//   type: 'ADD_HERO',
+//   payload: { id: 3, name: 'Superman', power: 99999 }
+// });
+// store.dispatch({
+//   type: 'REMOVE_HERO',
+//   payload: 2
+// });
+// store.dispatch({
+//   type: 'SET_ACTIVE_HERO',
+//   payload: { id: 3, name: 'Superman', power: 99999 }
+// });
+
+
+// ------
+// const a = {
+//   hobbies: [1, 2, 3]
+// }
+
+// const b = {
+//   ...a,
+//   hobbies: [...a.hobbies]
+// }
+
+// // a.hobbies ??? b.hobbies tham chiếu
+// a.hobbies.push(4)
+// // b.hobbies = ??? [1, 2, 3, 4]
