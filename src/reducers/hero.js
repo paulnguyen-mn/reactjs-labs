@@ -1,6 +1,10 @@
+import { GET_HERO_LIST, GET_HERO_LIST_SUCCESS, GET_HERO_LIST_FAILED } from "../actions/actionType";
 
 const initialHeroState = {
   list: [],
+  params: { _limit: 10, _page: 1 },
+  loading: false,
+  error: '',
   activeHero: {},
 };
 const heroReducer = (state = initialHeroState, action) => {
@@ -36,6 +40,41 @@ const heroReducer = (state = initialHeroState, action) => {
         activeHero: newActiveHero,
       };
     }
+
+
+    case GET_HERO_LIST: {
+      return {
+        ...state,
+        error: '',
+        loading: true,
+      };
+    }
+    case GET_HERO_LIST_SUCCESS: {
+      const newList = [...action.payload.data].map(product => ({
+        id: product.id,
+        name: product.name,
+        power: product.originalPrice,
+      }));
+      const newParams = {
+        ...state.params,
+        ...action.payload.pagination
+      };
+
+      return {
+        ...state,
+        loading: false,
+        list: newList,
+        params: newParams,
+      };
+    }
+    case GET_HERO_LIST_FAILED: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    }
+
     default:
       return state;
   }

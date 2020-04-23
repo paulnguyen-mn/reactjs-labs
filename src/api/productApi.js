@@ -3,7 +3,7 @@ import AppConstants from '../appConstants.js';
 
 class ProductApi {
   constructor() {
-    this.resourceName = 'posts';
+    this.resourceName = 'products';
   }
 
   /**
