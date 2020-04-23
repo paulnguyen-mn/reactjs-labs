@@ -14,8 +14,8 @@ import ProductDetailPage from './containers/ProductDetailPage';
 import GlobalContext from './contexts/globalContext';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { increaseCounter, decreaseCounter } from './actions/counter';
-import { addHero, setActiveHero } from './actions/hero';
+import { increaseCounter, decreaseCounter, increaseCounterAsync } from './actions/counter';
+import { addHero, setActiveHero, getHeroList } from './actions/hero';
 
 class App extends PureComponent {
   constructor(props) {
@@ -41,6 +41,10 @@ class App extends PureComponent {
     }
   }
 
+  componentDidMount() {
+    this.props.getHeroList();
+  }
+
   handleClick = () => {
     this.setState(prevState => ({
       initialState: {
@@ -54,7 +58,8 @@ class App extends PureComponent {
   }
 
   handleIncreaseClick = () => {
-    this.props.increaseCounter();
+    // this.props.increaseCounter();
+    this.props.increaseCounterAsync();
   }
 
   handleDecreaseClick = () => {
@@ -76,10 +81,10 @@ class App extends PureComponent {
   }
 
   render() {
-    const { heroList, activeHero, count } = this.props;
+    const { heroList, heroLoading, heroError, activeHero, count } = this.props;
     console.log('REDUX State: ', { heroList, activeHero, count });
 
-    const { initialState } = this.state;
+    // const { initialState } = this.state;
 
 
     return (
@@ -88,6 +93,9 @@ class App extends PureComponent {
         <button onClick={this.handleDecreaseClick}>Decrease</button>
         <button onClick={this.handleIncreaseClick}>Increase</button>
         <button onClick={this.handleAddHeroClick}>Add hero</button>
+
+        {heroLoading && <div>Loading ...</div>}
+        {heroError && <p className="error-message">{heroError}</p>}
 
         <ul>
           {heroList.map(hero => {
@@ -109,7 +117,7 @@ class App extends PureComponent {
         </ul>
 
 
-        <button onClick={this.handleClick}>Change context value</button>
+        {/* <button onClick={this.handleClick}>Change context value</button>
 
         <GlobalContext.Provider value={initialState}>
           <BrowserRouter>
@@ -128,7 +136,7 @@ class App extends PureComponent {
               <Route component={NotFound} />
             </Switch>
           </BrowserRouter>
-        </GlobalContext.Provider>
+        </GlobalContext.Provider> */}
       </div>
     );
   }
@@ -136,6 +144,8 @@ class App extends PureComponent {
 
 App.propTypes = {
   heroList: PropTypes.array.isRequired,
+  heroLoading: PropTypes.bool.isRequired,
+  heroError: PropTypes.string.isRequired,
   activeHero: PropTypes.object.isRequired,
   count: PropTypes.number.isRequired,
 
@@ -143,10 +153,14 @@ App.propTypes = {
   decreaseCounter: PropTypes.func.isRequired,
   addHero: PropTypes.func.isRequired,
   setActiveHero: PropTypes.func.isRequired,
+  increaseCounterAsync: PropTypes.func.isRequired,
+  getHeroList: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
   heroList: state.hero.list,
+  heroLoading: state.hero.loading,
+  heroError: state.hero.error,
   activeHero: state.hero.activeHero,
   count: state.counter,
 })
@@ -157,6 +171,8 @@ const mapDispatchToProps = dispatch => {
     decreaseCounter,
     addHero,
     setActiveHero,
+    increaseCounterAsync,
+    getHeroList,
   }, dispatch);
 }
 
