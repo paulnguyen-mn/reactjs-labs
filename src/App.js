@@ -117,10 +117,12 @@ class App extends PureComponent {
         </ul>
 
 
-        {/* <button onClick={this.handleClick}>Change context value</button>
+        {/* <button onClick={this.handleClick}>Change context value</button> */}
 
-        <GlobalContext.Provider value={initialState}>
+        <GlobalContext.Provider value={{}}>
           <BrowserRouter>
+            <Link to="/">Go back to Home</Link>
+
             <Switch>
               <Route exact path="/" component={HomePage} />
               <Route path="/about" component={AboutPage} />
@@ -136,7 +138,7 @@ class App extends PureComponent {
               <Route component={NotFound} />
             </Switch>
           </BrowserRouter>
-        </GlobalContext.Provider> */}
+        </GlobalContext.Provider>
       </div>
     );
   }
@@ -177,6 +179,11 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+// - HOC
+// - withRouter
+// - withTranslation
+// - ...
 
 
 // HomePage
