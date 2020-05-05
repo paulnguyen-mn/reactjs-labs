@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Switch, Route, Redirect, NavLink } from 'react-router-dom';
 import NotFound from '../NotFound';
 import GlobalContext from '../../contexts/globalContext';
+import { withUnloadConfirmation } from '../../hocs/withUnloadConfirmation';
 
 // import Description from '../../components/Product/Description';
 // import Information from '../../components/Product/Information';
@@ -23,9 +24,9 @@ class ProductDetailPage extends PureComponent {
   // Solution 1
   // static contextType = GlobalContext;
   render() {
-    const { match } = this.props;
+    const { match, power } = this.props;
     // console.log(match);
-    console.log('Product detail - context: ', this.context);
+    console.log('Product detail - power: ', power);
 
     return (
       <div className="product">
@@ -92,6 +93,7 @@ ProductDetailPage.contextType = GlobalContext;
 
 ProductDetailPage.propTypes = {
   match: PropTypes.object.isRequired,
+  power: PropTypes.number,
 };
 
-export default ProductDetailPage;
+export default withUnloadConfirmation(ProductDetailPage);

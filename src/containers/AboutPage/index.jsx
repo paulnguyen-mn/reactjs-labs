@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withUnloadConfirmation } from '../../hocs/withUnloadConfirmation';
 
 AboutPage.propTypes = {
 
@@ -13,4 +14,4 @@ function AboutPage(props) {
   );
 }
 
-export default AboutPage;
+export default withUnloadConfirmation(AboutPage);
