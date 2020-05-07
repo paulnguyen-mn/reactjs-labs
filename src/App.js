@@ -89,7 +89,7 @@ class App extends PureComponent {
 
     return (
       <div className="App">
-        <h1>COUNTER: {count}</h1>
+        {/* <h1>COUNTER: {count}</h1>
         <button onClick={this.handleDecreaseClick}>Decrease</button>
         <button onClick={this.handleIncreaseClick}>Increase</button>
         <button onClick={this.handleAddHeroClick}>Add hero</button>
@@ -114,7 +114,7 @@ class App extends PureComponent {
               </li>
             )
           })}
-        </ul>
+        </ul> */}
 
 
         {/* <button onClick={this.handleClick}>Change context value</button> */}
