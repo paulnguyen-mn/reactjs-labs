@@ -4,6 +4,8 @@ import { Progress, Jumbotron, Button, FormGroup, Label, Input, FormFeedback } fr
 import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import InputField from '../../components/CustomFields/InputField';
+import RadiosField from '../../components/CustomFields/RadiosField';
 
 
 ContactPage.propTypes = {
@@ -53,7 +55,9 @@ function ContactPage(props) {
         is: 'female',
         then: Yup.string().required('Thích màu gì chị ơi!!!'),
         otherwise: Yup.string(),
-      })
+      }),
+
+    gender: Yup.string().min(10, 'Ngan qua di :P')
   })
 
   const handleFormSubmit = (values, formikBag) => {
@@ -92,7 +96,16 @@ function ContactPage(props) {
           return (
             <Form>
 
-              <FormGroup>
+              <Field
+                name="name"
+                component={InputField}
+
+                label="Name"
+                type="text"
+                placeholder="Eg: your name"
+              />
+
+              {/* <FormGroup>
                 <Label htmlFor="nameControl">Name</Label>
                 <Field
                   id="nameControl"
@@ -104,9 +117,18 @@ function ContactPage(props) {
                 />
 
                 <ErrorMessage name="name" component={FormFeedback} />
-              </FormGroup>
+              </FormGroup> */}
 
-              <FormGroup>
+              <Field
+                name="age"
+                component={InputField}
+
+                label="Age"
+                type="number"
+                placeholder="Eg: your age"
+              />
+
+              {/* <FormGroup>
                 <Label htmlFor="ageControl">Age</Label>
                 <Field
                   id="ageControl"
@@ -116,9 +138,20 @@ function ContactPage(props) {
                   type="number"
                   placeholder="How old are you?"
                 />
-              </FormGroup>
+              </FormGroup> */}
 
-              <FormGroup tag="fieldset">
+              <Field
+                name="gender"
+                component={RadiosField}
+
+                label="Gender"
+                options={[
+                  { value: 'male', label: 'Male' },
+                  { value: 'female', label: 'Female' },
+                ]}
+              />
+
+              {/* <FormGroup tag="fieldset">
                 <legend>Gender</legend>
 
                 <FormGroup check>
@@ -148,7 +181,7 @@ function ContactPage(props) {
                     Female
                   </Label>
                 </FormGroup>
-              </FormGroup>
+              </FormGroup> */}
 
               {values.gender === 'male' && (
                 <FormGroup>
